@@ -1,0 +1,11 @@
+.product-container {
+    display: flex;
+}
+.product-container img {
+    width: 180px;
+    height: 180px;
+}
+
+.product-details {
+
+}
