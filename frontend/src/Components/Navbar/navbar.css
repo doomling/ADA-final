@@ -1,16 +1,8 @@
-/*
-#ffe600 amarillo
-input text 18px
-#eeeeee  fondo boton buscar
-#333 texto
-#999 icono?
-*/
-
 nav {
     width: 100vw;
     height: 60px;
     background-color: #704777;
-    position: absolute;
+    position: relative;
     top: 0;
     display: flex;
     align-items: center;

@@ -48,6 +48,7 @@ handleRedirect = () => {
 
  render() {
    const url = "/items?search=" + this.state.textValue
+
     return (
       <nav>
         {this.state.isRedirecting &&
@@ -58,9 +59,7 @@ handleRedirect = () => {
         <div className="search-container">
             <input type="text" value={this.state.textValue} onChange={this.handleChange.bind(this)} onSubmit={this.resetField}/>
             <div className="button" onClick={this.handleRedirect} onSubmit={this.resetField}>
-                {/*<Link to={"/items/?search=" + this.state.textValue}>
-                  <img src="./images/ic_Search.png"/>
-                </Link>*/}
+                <img src="./images/ic_Search.png"/>
             </div>
         </div>
         </div>

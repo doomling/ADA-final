@@ -47,16 +47,16 @@ getAmount = function(price) {
   price = price.toString()
   console.log(price)
   if (price.indexOf('.') > -1) {
-   return amount = parseInt(price.slice(price.indexOf('.'), price.length))
+   return amount = parseInt(price.slice(0, price.indexOf('.')))
  } else {
    return amount = parseInt(price)
  }
 }
-
+// 7.5
 getDecimals = function(price) {
 price = price.toString()
  if (price.indexOf('.') > -1) {
-   return decimals = parseInt(price.slice(0, price.indexOf('.')))
+   return decimals = parseInt(price.slice(price.indexOf('.')+1))
  } else {
    return decimals = 0
  }
@@ -67,8 +67,12 @@ getItemsPerPage = function(data) {
 
   for(var i = 0; i < data.results.length; i++) {
 
+    console.log('hola soy price',data.results[i].price)
+
     const amount = getAmount(data.results[i].price)
     const decimals = getDecimals(data.results[i].price)
+
+    console.log('hola soy price',amount, '  aaa   ',decimals)
 
     items[i] = {
       id: data.results[i].id,

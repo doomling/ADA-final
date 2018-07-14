@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-//import './home.css';
-import Navbar from '../Navbar/Navbar'
-import Results from '../Results/Results'
+import './home.css';
+import Navbar from './Navbar/Navbar'
+import Results from './Results/Results'
 
 class Search extends Component {
  constructor(props) {

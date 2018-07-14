@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Navbar from '../Navbar/Navbar'
 import Product from '../Product/Product'
 import qs from 'query-string'
-import Breadcrum from '../Components/Breadcrum';
+import Breadcrum from '../Breadcrum';
 
 class Results extends Component {
   constructor(props) {
@@ -54,14 +54,16 @@ class Results extends Component {
    console.log(this.state.data.categories.name)
     return (
       <div>
-        <Navbar/>
+        {/*<Navbar/>*/}
+        <Breadcrum value={this.state.data.categories.name}/>
         {this.state.data.items.map((value, i) => {
             let free
                 if (value.free_shipping) {
-                    free = 'yay'
+                    free = true
                 } else {
-                    free = 'no'
+                    free = false
                 }
+                console.log(free)
           return (
             <Product key={i} 
                 img={value.picture} 
@@ -73,7 +75,6 @@ class Results extends Component {
             />
         )}
       )}
-      <Breadcrum value={this.state.data.categories.name}/>
       </div>
      );
    }

@@ -9,7 +9,7 @@ super(props)
 
  render() {
     return (
-    <div className='bradcrum-container'>
+    <div className='breadcrum'>
         <span>{this.props.value}</span>
     </div>
     )
