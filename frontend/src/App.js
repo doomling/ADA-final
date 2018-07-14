@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 //import logo from '../images/Logo_ML@2x.png';
 import './App.css';
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 import Home from './Components/Home'
 import Search from './Components/Search'
-import Results from './Results/Results'
 
 class App extends Component {
 

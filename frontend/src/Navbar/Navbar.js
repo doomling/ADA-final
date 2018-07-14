@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './navbar.css'
-import { BrowserRouter as Router, Route, Link, Redirect } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 
 class Navbar extends Component {
   constructor(props) {
@@ -11,7 +11,6 @@ class Navbar extends Component {
     isRedirecting: false
   }
  }
-
 
  handleChange(e) {
   const value = e.target.value

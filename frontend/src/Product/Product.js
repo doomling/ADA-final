@@ -12,8 +12,13 @@ class Product extends Component {
       <div className='product-container'>
         <img src={this.props.img}/>
         <div className='product-details'>
+        <div className='product-price'>
+        <span>$</span>
+        <span>{this.props.price}</span>
+        <span>.</span>
+        <span>{this.props.decimals}</span>
+        </div>
             <span>{this.props.title}</span>
-            <span>{this.props.price}</span>
             <span>{this.props.shipping}</span>
             <span>{this.props.location}</span>
         </div>

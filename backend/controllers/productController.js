@@ -7,46 +7,98 @@ const author = {
   lastname: 'Rey',
 }
 
+getCategory = function(data) {
+  let selectedCategory = {
+      name: [],
+      id: '',
+      results: 0
+    } 
+
+  if(data.filters.length <= 0) {
+    let categoryPos = data.available_filters.map(function(e){
+      return e.id;
+    }).indexOf('category');
+
+    const availableCategories = data.available_filters[categoryPos].values
+
+    // get the category with most results 
+    
+    for (var i = 0; i < availableCategories.length; i++ ) {
+      if (selectedCategory.results < availableCategories[i].results) {
+        selectedCategory.results = availableCategories[i].results
+        selectedCategory.name = availableCategories[i].name
+        selectedCategory.id = availableCategories[i].id
+      }  
+    }
+    return selectedCategory
+  }
+  else {
+    const currentFilters = data.filters[0].values[0].path_from_root
+    for(var i = 0; i < currentFilters.length; i++) {
+      selectedCategory.name.push(currentFilters[i].name)
+    }    
+    //selectedCategory = data.filters[0].values[0].path_from_root
+    console.log('vengo de filter', selectedCategory)
+    return selectedCategory
+  }
+}
+
+getAmount = function(price) {
+  price = price.toString()
+  console.log(price)
+  if (price.indexOf('.') > -1) {
+   return amount = parseInt(price.slice(price.indexOf('.'), price.length))
+ } else {
+   return amount = parseInt(price)
+ }
+}
+
+getDecimals = function(price) {
+price = price.toString()
+ if (price.indexOf('.') > -1) {
+   return decimals = parseInt(price.slice(0, price.indexOf('.')))
+ } else {
+   return decimals = 0
+ }
+}
+
+getItemsPerPage = function(data) {
+  let items = []
+
+  for(var i = 0; i < data.results.length; i++) {
+
+    const amount = getAmount(data.results[i].price)
+    const decimals = getDecimals(data.results[i].price)
+
+    items[i] = {
+      id: data.results[i].id,
+      title: data.results[i].title,
+      price: {
+        currency: data.results[i].currency_id,
+        amount: amount,
+        decimals: decimals,
+      },
+      picture: data.results[i].thumbnail,
+      location: data.results[i].address.state_name,
+      condition: data.results[i].condition,
+      free_shipping: data.results[i].shipping.free_shipping
+    }
+  }
+  return items
+}
+
 self.getProducts = function(req, res) {
     let search = req.query.q
       externalApi.getProductData(search).then(function(data) {
-        
-        let categoryPos = data.available_filters.map(function(e){
-          return e.id;
-        }).indexOf('category');
-
-        //const itemsToRender = 4
-        console.log(data.results.length)
-
-        getItemsPerPage = function(data) {
-          let items = []
-          for(var i = 0; i < data.results.length; i++) {
-            items[i] = {
-              id: data.results[i].id,
-              title: data.results[i].title,
-              price: {
-                currency: data.results[i].currency_id,
-                amount: data.results[i].price,
-                decimals: 'number',
-              },
-              picture: data.results[i].thumbnail,
-              location: data.results[i].address.state_name,
-              condition: data.results[i].condition,
-              free_shipping: data.results[i].shipping.free_shipping
-            }
-          }
-          return items
-        }
+        const selectedCategory = getCategory(data)
 
         let items = getItemsPerPage(data);
-        
-        
         const response = {
           author: {
             name: author.name,
             lastname: author.lastname,
           },
-          categories: data.available_filters[categoryPos].values,
+          categories: selectedCategory,
           items: items
         }
 

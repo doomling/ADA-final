@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import Navbar from '../Navbar/Navbar'
 import Product from '../Product/Product'
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import qs from 'query-string'
+import Breadcrum from '../Components/Breadcrum';
 
 class Results extends Component {
   constructor(props) {
@@ -14,11 +14,15 @@ class Results extends Component {
         user: 'placeholder',
         lastname: 'placeholder'
      },
-    categories: [],
+    categories: {
+      id: '',
+      name: [],
+      results:'',
+    },
     items: []
         }
     }
-    }
+  }
 
  async componentDidMount() {
     const search = qs.parse(this.props.location.search).search
@@ -47,6 +51,7 @@ class Results extends Component {
     }
   }
  render() {
+   console.log(this.state.data.categories.name)
     return (
       <div>
         <Navbar/>
@@ -62,11 +67,13 @@ class Results extends Component {
                 img={value.picture} 
                 title={value.title} 
                 price={value.price.amount}
-                price={value.location}
+                decimals={value.price.decimals}
+                location={value.location}
                 shipping={free}
             />
         )}
       )}
+      <Breadcrum value={this.state.data.categories.name}/>
       </div>
      );
    }
