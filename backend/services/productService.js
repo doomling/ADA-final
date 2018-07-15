@@ -23,4 +23,15 @@ self.getProductById = function (id) {
 return getProductById
 }
 
+self.getProductDescription = function (id) {
+  let getProductDescription = new Promise(function(resolve, reject) {
+  restler.get('https://api.mercadolibre.com/items/' + id + '/description').on('success', function(result) {
+    resolve(result)
+  }).on('fail', function(err) {
+    reject(err)
+  })
+})
+return getProductDescription
+}
+
 module.exports = self

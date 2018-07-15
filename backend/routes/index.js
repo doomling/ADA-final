@@ -8,7 +8,6 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/api/items', productController.getProducts);
-router.get('/api/items/:id', productController.getProductById);
 router.get('/api/items/:id/description', productController.getProductById);
 
 

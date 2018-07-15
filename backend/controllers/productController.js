@@ -114,6 +114,55 @@ self.getProducts = function(req, res) {
 
   self.getProductById = function(req, res) {
     let id = req.params.id
+    let description = ''
+
+    console.log('lala', id)
+
+      externalApi.getProductDescription(id).then(function(data) {
+        console.log('esto es data', data)
+        if (data.plain_text != "") {
+          description = data.plain_text
+        } else {
+          description = 'Item sin descripción'
+        }
+      }).catch(function(err) {
+        console.log(err)
+      })
+
+      externalApi.getProductById(id).then(function(data) {
+        const amount = getAmount(data.price)
+        const decimals = getDecimals(data.price)
+
+        const response = {
+          author: {
+            name: author.name,
+            lastname: author.lastname,
+          },
+            item: {     
+            id: data.id, 
+            title: data.title,
+            price: {       
+              currency: data.price.currency,       
+              amount: amount,       
+              decimals: decimals,   
+            },     
+              picture: data.pictures[0].url,     
+              condition: data.condition,     
+              free_shipping: data.free_shipping,     
+              sold_quantity: data.sold_quantity,     
+              description: description,   
+              },
+            } 
+        return res.json(response)
+      }).catch(function(err) {
+        console.log(err)
+      })
+  }
+
+  
+
+  /*self.getProductDescription = function(req, res) {
+    let id = req.params.id
     console.log(req.params)
     console.log(id)
       externalApi.getProductById(id).then(function(data) {
@@ -122,5 +171,25 @@ self.getProducts = function(req, res) {
         console.log(err)
       })
   }
+*/
+  /*
+  {   
+    “author”: {
+           “name”: String
+            “lastname”: String   },
+            “item”: {     
+              "id": String, 
+              "title": String,
+              "price": {       
+                "currency": String,       
+                "amount": Number,       
+                "decimals": Number,   },     
+                “picture”: String,     
+                "condition": String,     
+                "free_shipping": Boolean,     
+                "sold_quantity", Number     
+                "description": String   }
+              } 
+  */
 
 module.exports = self

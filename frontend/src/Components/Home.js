@@ -7,10 +7,6 @@ class Home extends Component {
    super(props)
  }
 
- handleCallback(e) {
-    console.log('nada')
- }
-
   render() {
     return (
         <section className="home">
