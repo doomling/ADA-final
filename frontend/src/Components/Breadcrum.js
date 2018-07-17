@@ -8,12 +8,19 @@ super(props)
 
 
  render() {
+     console.log(this.props)
     return (
     <div className='breadcrum'>
-        <span>{this.props.value}</span>
+        {this.props.value.map((value, i) => {
+            return (
+                <div>
+                    <span key={i}>{value.name}</span>
+                    <span> > </span>
+                </div>
+            )}
+        )}
     </div>
-    )
-}
+    )}
 }
 
  export default Breadcrum; 

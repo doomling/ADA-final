@@ -10,7 +10,7 @@ class View extends Component {
     console.log(this.props.item)
     return (
       <div>
-        <div>{this.props.item.picture}</div>
+        <img src={this.props.item.picture}/>
         <div>{this.props.item.condition}</div>
         <div>{this.props.item.sold_quantity}</div>
         <div>{this.props.item.title}</div>

@@ -40,7 +40,7 @@ class Results extends Component {
     return (
       <div>
         {this.state.data &&
-        <Breadcrum value={this.state.data.categories.name}/>}
+        <Breadcrum value={this.state.data.categories}/>}
         {this.state.data &&
         this.state.data.items.map((value, i) => {
             let free

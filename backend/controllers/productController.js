@@ -8,11 +8,13 @@ const author = {
 }
 
 getCategory = function(data) {
-  let selectedCategory = {
+  let selectedCategory = [] 
+
+  let categories = {
       name: [],
       id: '',
       results: 0
-    } 
+  }
 
   if(data.filters.length <= 0) {
     let categoryPos = data.available_filters.map(function(e){
@@ -24,18 +26,20 @@ getCategory = function(data) {
     // get the category with most results 
     
     for (var i = 0; i < availableCategories.length; i++ ) {
-      if (selectedCategory.results < availableCategories[i].results) {
-        selectedCategory.results = availableCategories[i].results
-        selectedCategory.name = availableCategories[i].name
-        selectedCategory.id = availableCategories[i].id
+      
+      if (categories.results < availableCategories[i].results) {
+        categories.results = availableCategories[i].results
+        categories.name = availableCategories[i].name
+        categories.id = availableCategories[i].id
       }  
     }
+    selectedCategory.push(categories)
     return selectedCategory
   }
   else {
     const currentFilters = data.filters[0].values[0].path_from_root
     for(var i = 0; i < currentFilters.length; i++) {
-      selectedCategory.name.push(currentFilters[i].name)
+      selectedCategory.push(currentFilters[i])
     }    
     //selectedCategory = data.filters[0].values[0].path_from_root
     console.log('vengo de filter', selectedCategory)
