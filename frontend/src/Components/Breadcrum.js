@@ -13,8 +13,8 @@ super(props)
     <div className='breadcrum'>
         {this.props.value.map((value, i) => {
             return (
-                <div>
-                    <span key={i}>{value.name}</span>
+                <div key={i}>
+                    <span>{value.name}</span>
                     <span> > </span>
                 </div>
             )}
