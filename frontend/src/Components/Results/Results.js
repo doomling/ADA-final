@@ -8,19 +8,7 @@ class Results extends Component {
   constructor(props) {
    super(props)
    this.state = {
-    search: "",
-    data: {
-    author: {
-        user: 'placeholder',
-        lastname: 'placeholder'
-     },
-    categories: {
-      id: '',
-      name: [],
-      results:'',
-    },
-    items: []
-        }
+    
     }
   }
 
@@ -51,8 +39,10 @@ class Results extends Component {
  render() {
     return (
       <div>
-        <Breadcrum value={this.state.data.categories.name}/>
-        {this.state.data.items.map((value, i) => {
+        {this.state.data &&
+        <Breadcrum value={this.state.data.categories.name}/>}
+        {this.state.data &&
+        this.state.data.items.map((value, i) => {
             let free
                 if (value.free_shipping) {
                     free = true
@@ -67,6 +57,7 @@ class Results extends Component {
                 decimals={value.price.decimals}
                 location={value.location}
                 shipping={free}
+                id={value.id}
             />
         )}
       )}

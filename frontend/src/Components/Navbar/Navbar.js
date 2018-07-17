@@ -32,11 +32,13 @@ handleRedirect = () => {
         {/*this.state.isRedirecting &&
           <Redirect to={url} />*/}
         <div className="inner-content">
-        <img className="logo" src="/images/doomling.png" />
+        <Link to="/">
+          <img className="logo" src="/images/doomling.png" />
+        </Link>
         <div className="search-container">
             <input type="text" value={this.state.textValue} onChange={this.handleChange.bind(this)} onSubmit={this.resetField}/>
             <div className="button" onClick={this.handleRedirect} onSubmit={this.resetField}>
-                <Link to={url}><img src="./images/ic_Search.png"/></Link>
+                <Link to={url}><img src="/images/ic_Search.png"/></Link>
             </div>
         </div>
         </div>

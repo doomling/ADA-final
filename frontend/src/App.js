@@ -13,8 +13,8 @@ render() {
   <Router>
     <div>
       <Route exact path="/" component={Home} />
-      <Route path="/items/" component={Search} />
-      <Route exact path="/items/:id" component={Item} />
+      <Route exact path="/items/" component={Search} />
+      <Route path="/items/:id" component={Item} />
     </div>
   </Router>
   );

@@ -8,6 +8,7 @@ class Product extends Component {
     }
 
  render() {
+     const url = "/items/" + this.props.id
      console.log(this.props.shipping)
     return (
       <div className='product-container'>
@@ -21,7 +22,9 @@ class Product extends Component {
                 {this.props.shipping &&
                 <span><img src="./images/ic_shipping.png"/></span>}
             </span>
+            <Link to={url}>
             <span>{this.props.title}</span>
+            </Link>
         </div>
         <div className="product-location">
             <span>{this.props.location}</span>
