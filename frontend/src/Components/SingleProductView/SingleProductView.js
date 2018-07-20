@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import './home.css';
-import Navbar from './Navbar/Navbar'
-import qs from 'query-string'
-import View from './View';
+import '../general.css';
+import './single-product-view.css'
+import Navbar from '../Navbar/Navbar'
+import SingleProduct from '../SingleProduct/SingleProduct';
+import Breadcrum from '../Breadcrum/Breadcrum'
 
-class Item extends Component {
+class SingleProductView extends Component {
  constructor(props) {
    super(props)
    this.state = {
@@ -33,11 +34,13 @@ class Item extends Component {
         <section className="home">
         <Navbar/>
         {this.state.data &&
-        <View item={this.state.data.item}/>}
+        <Breadcrum value={this.state.data.categories}/>}
+        {this.state.data &&
+        <SingleProduct item={this.state.data.item}/>}
         </section>
     );
   }
 
 }
 
-export default Item;
+export default SingleProductView;

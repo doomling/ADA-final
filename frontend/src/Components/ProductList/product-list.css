@@ -7,14 +7,25 @@
     display: flex;
 }
 
+.product-container a {
+    color: #1b1b1b;
+    text-decoration: none;
+}
+
+.product-container a:visited, a:hover {
+    color: #1b1b1b;
+    text-decoration: none;
+}
+
 .product-thumbnail {
     width: 180px;
     height: 180px;
-    background-color: red;
+    background-color: #cccccc;
 }
 
 .product-thumbnail img {
     width: 180px;
+    border-radius: 4px;
 }
 
 .product-details {
@@ -26,11 +37,16 @@
 
 .product-price {
     font-size: 22px;
-    padding: 10px 0;
+    padding-bottom: 10px;
+}
+
+.product-shipping {
+    padding: 0 10px;
 }
 
 .product-location {
     padding: 10px;
     font-size: 12px;
 }
+
 

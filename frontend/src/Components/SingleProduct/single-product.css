@@ -1,0 +1,32 @@
+.single-product-container {
+    width: 70%;
+    height: 600px;
+    padding:10px;
+    background-color: #fff;
+    display: flex;
+    margin: auto;
+}
+
+.single-product-container img {
+    width: 500px;
+    height: auto;
+}
+
+
+.single-product-container h1 {
+    color: #3b3b3b;
+    font-size: 18px;
+}
+
+.single-product-container .description {
+    color: #3b3b3b;
+    font-size: 12px;
+}
+
+.single-product-container .col1 {
+    flex: 0.8;
+}
+
+.single-product-container .col2 {
+    flex: 0.2;
+}

@@ -41,15 +41,12 @@ getCategory = function(data) {
     for(var i = 0; i < currentFilters.length; i++) {
       selectedCategory.push(currentFilters[i])
     }    
-    //selectedCategory = data.filters[0].values[0].path_from_root
-    console.log('vengo de filter', selectedCategory)
     return selectedCategory
   }
 }
 
 getAmount = function(price) {
   price = price.toString()
-  console.log(price)
   if (price.indexOf('.') > -1) {
    return amount = parseInt(price.slice(0, price.indexOf('.')))
  } else {
@@ -71,12 +68,8 @@ getItemsPerPage = function(data) {
 
   for(var i = 0; i < data.results.length; i++) {
 
-    console.log('hola soy price',data.results[i].price)
-
     const amount = getAmount(data.results[i].price)
     const decimals = getDecimals(data.results[i].price)
-
-    console.log('hola soy price',amount, '  aaa   ',decimals)
 
     items[i] = {
       id: data.results[i].id,
@@ -98,7 +91,8 @@ getItemsPerPage = function(data) {
 self.getProducts = function(req, res) {
     let search = req.query.q
       externalApi.getProductData(search).then(function(data) {
-        const selectedCategory = getCategory(data)
+        let selectedCategory = []
+        selectedCategory = getCategory(data)
 
         let items = getItemsPerPage(data);
         const response = {
@@ -117,32 +111,27 @@ self.getProducts = function(req, res) {
   }
 
   self.getProductById = function(req, res) {
+    
     let id = req.params.id
     let description = ''
-
-    console.log('lala', id)
-
-      externalApi.getProductDescription(id).then(function(data) {
-        console.log('esto es data', data)
-        if (data.plain_text != "") {
-          description = data.plain_text
-        } else {
-          description = 'Item sin descripción'
-        }
-      }).catch(function(err) {
-        console.log(err)
-      })
+    let amount = ''
+    let decimals = ''
+    selectedCategory = []
 
       externalApi.getProductById(id).then(function(data) {
-        const amount = getAmount(data.price)
-        const decimals = getDecimals(data.price)
+        
+      amount = getAmount(data.price)
+      decimals = getDecimals(data.price)
 
-        const response = {
-          author: {
-            name: author.name,
-            lastname: author.lastname,
-          },
-            item: {     
+        externalApi.getProductDescription(id).then(function(dataDescription) {
+    
+          if (dataDescription.plain_text != "") {
+            description = dataDescription.plain_text
+          } else {
+            description = 'Item sin descripción'
+          }
+
+          let item = {     
             id: data.id, 
             title: data.title,
             price: {       
@@ -155,45 +144,30 @@ self.getProducts = function(req, res) {
               free_shipping: data.free_shipping,     
               sold_quantity: data.sold_quantity,     
               description: description,   
-              },
+              }
+        
+        externalApi.getProductCategories(data.category_id).then(function(dataCategories) {
+          selectedCategory = dataCategories.path_from_root
+          selectedCategory = dataCategories.path_from_root
+
+        const response = {
+          author: {
+            name: author.name,
+            lastname: author.lastname,
+          },
+            item: item,
+            categories: selectedCategory,
             } 
         return res.json(response)
+        }).catch(function(err){
+          console.log(err)
+        })
       }).catch(function(err) {
-        console.log(err)
+          console.log(err)
       })
+    }).catch(function(err) {
+        console.log(err)
+    })
   }
-
   
-
-  /*self.getProductDescription = function(req, res) {
-    let id = req.params.id
-    console.log(req.params)
-    console.log(id)
-      externalApi.getProductById(id).then(function(data) {
-        return res.json(data)
-      }).catch(function(err) {
-        console.log(err)
-      })
-  }
-*/
-  /*
-  {   
-    “author”: {
-           “name”: String
-            “lastname”: String   },
-            “item”: {     
-              "id": String, 
-              "title": String,
-              "price": {       
-                "currency": String,       
-                "amount": Number,       
-                "decimals": Number,   },     
-                “picture”: String,     
-                "condition": String,     
-                "free_shipping": Boolean,     
-                "sold_quantity", Number     
-                "description": String   }
-              } 
-  */
-
 module.exports = self

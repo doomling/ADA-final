@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 //import './home.css';
-import Navbar from './Navbar/Navbar'
-import Results from './Results/Results'
+import Navbar from '../Navbar/Navbar'
+import ResultsView from '../ResultsView/ResultsView'
 
-class Search extends Component {
+class SearchView extends Component {
  constructor(props) {
    super(props)
    this.state = {
@@ -16,10 +16,10 @@ class Search extends Component {
     return (
         <section className="home">
             <Navbar/>
-            <Results location={this.props.location} />
+            <ResultsView location={this.props.location} />
         </section>
     );
   }
 }
 
-export default Search;
+export default SearchView;

@@ -1,0 +1,8 @@
+.breadcrum {
+    padding: 10px 0;
+    display: flex;
+    background-color: #8CC4D8;
+    color: #175676;
+    width: 100vw;
+    margin-bottom: 20px;
+}

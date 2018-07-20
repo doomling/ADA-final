@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 //import logo from '../images/Logo_ML@2x.png';
 import './App.css';
 import { BrowserRouter as Router, Route } from "react-router-dom";
-import Home from './Components/Home'
-import Search from './Components/Search'
-import Item from './Components/Item'
+import HomeView from './Components/HomeView/HomeView'
+import SearchView from './Components/SearchView/SearchView'
+import ItemView from './Components/SingleProductView/SingleProductView'
 
 class App extends Component {
 
@@ -12,9 +12,9 @@ render() {
   return (
   <Router>
     <div>
-      <Route exact path="/" component={Home} />
-      <Route exact path="/items/" component={Search} />
-      <Route path="/items/:id" component={Item} />
+      <Route exact path="/" component={HomeView} />
+      <Route exact path="/items/" component={SearchView} />
+      <Route path="/items/:id" component={ItemView} />
     </div>
   </Router>
   );

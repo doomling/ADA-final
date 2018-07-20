@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import Navbar from '../Navbar/Navbar'
-import Product from '../Product/Product'
+import ProductList from '../ProductList/ProductList'
 import qs from 'query-string'
-import Breadcrum from '../Breadcrum';
+import Breadcrum from '../Breadcrum/Breadcrum';
 
-class Results extends Component {
+class ResultsView extends Component {
   constructor(props) {
    super(props)
    this.state = {
@@ -50,7 +50,7 @@ class Results extends Component {
                     free = false
                 }
           return (
-            <Product key={i} 
+            <ProductList key={i} 
                 img={value.picture} 
                 title={value.title} 
                 price={value.price.amount}
@@ -66,4 +66,4 @@ class Results extends Component {
    }
  }
 
- export default Results; 
+ export default ResultsView; 

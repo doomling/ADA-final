@@ -1,0 +1,11 @@
+html, body {
+    padding: 0;
+    margin: 0;
+}
+
+.home {
+    background-color: #CCE6F4;
+    height: 100vh;
+    width: 100vw;
+
+}

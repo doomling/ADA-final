@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
-import './product.css'
+import './product-list.css'
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
-class Product extends Component {
+class ProductList extends Component {
   constructor(props) {
    super(props)
     }
 
  render() {
      const url = "/items/" + this.props.id
-     console.log(this.props.shipping)
     return (
       <div className='product-container'>
         <div className='product-thumbnail'>
@@ -20,7 +19,7 @@ class Product extends Component {
                 <span>$ </span>
                 <span>{this.props.price}</span>
                 {this.props.shipping &&
-                <span><img src="./images/ic_shipping.png"/></span>}
+                <span className="product-shipping"><img src="./images/ic_shipping.png"/></span>}
             </span>
             <Link to={url}>
             <span>{this.props.title}</span>
@@ -35,4 +34,4 @@ class Product extends Component {
 }
 
 
- export default Product; 
+ export default ProductList; 
