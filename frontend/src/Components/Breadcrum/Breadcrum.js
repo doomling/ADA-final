@@ -2,19 +2,15 @@ import React, { Component } from 'react';
 import './breadcrum.css'
 
 class Breadcrum extends Component {
-constructor(props) {
-super(props)
-}
 
-
- render() {
+render() {
     return (
     <div className='breadcrum'>
         {this.props.value.map((value, i) => {
             return (
                 <div key={i}>
-                    <span> > </span>
                     <span>{value.name}</span>
+                    <span className="breadcrum-caret"> > </span>
                 </div>
             )}
         )}

@@ -2,10 +2,15 @@ let self = {}
 var restler = require('restler');
 const externalApi = require('../services/productService')
 
+
+// author, required harcoded data
+
 const author = {
   name: 'Belén',
   lastname: 'Rey',
 }
+
+
 
 getCategory = function(data) {
   let selectedCategory = [] 
@@ -23,8 +28,8 @@ getCategory = function(data) {
 
     const availableCategories = data.available_filters[categoryPos].values
 
-    // get the category with most results 
-    
+    // get the category with most results as required on the specs
+
     for (var i = 0; i < availableCategories.length; i++ ) {
       
       if (categories.results < availableCategories[i].results) {
@@ -49,19 +54,28 @@ getAmount = function(price) {
   price = price.toString()
   if (price.indexOf('.') > -1) {
    return amount = parseInt(price.slice(0, price.indexOf('.')))
- } else {
-   return amount = parseInt(price)
- }
+  } else {
+    return amount = parseInt(price)
+  }
 }
-// 7.5
+
 getDecimals = function(price) {
 price = price.toString()
  if (price.indexOf('.') > -1) {
-   return decimals = parseInt(price.slice(price.indexOf('.')+1))
+   decimals = price.slice(price.indexOf('.')+ 1)
+   // If decimals are just one number, adding an aditional 0
+   if (decimals.length < 2) {
+     decimals = decimals + '0'
+   } 
+   // parsing to int because API expects a number, not a string.
+   // This is the only reason I'll be handling double zeroes in the FE.
+  return parseInt(decimals)
  } else {
    return decimals = 0
  }
 }
+
+// get items per page
 
 getItemsPerPage = function(data) {
   let items = []
@@ -88,6 +102,8 @@ getItemsPerPage = function(data) {
   return items
 }
 
+// finally getting the products with all required fields.
+
 self.getProducts = function(req, res) {
     let search = req.query.q
       externalApi.getProductData(search).then(function(data) {
@@ -105,10 +121,14 @@ self.getProducts = function(req, res) {
         }
 
         return res.json(response)
+
       }).catch(function(err) {
-        console.log(err)
+        res.json({cause: 'failed to fetch', status: '500'}, 500)
       })
   }
+
+  // getting products by id
+  // it's currently way slower than what I'd like - TODO: Make it better somehow
 
   self.getProductById = function(req, res) {
     
@@ -119,9 +139,12 @@ self.getProducts = function(req, res) {
     selectedCategory = []
 
       externalApi.getProductById(id).then(function(data) {
-        
+      
+      // saving amount and decimals for later
+      
       amount = getAmount(data.price)
       decimals = getDecimals(data.price)
+
 
         externalApi.getProductDescription(id).then(function(dataDescription) {
     
@@ -146,10 +169,12 @@ self.getProducts = function(req, res) {
               description: description,   
               }
         
+        // another API call to get the product category
+
         externalApi.getProductCategories(data.category_id).then(function(dataCategories) {
           selectedCategory = dataCategories.path_from_root
-          selectedCategory = dataCategories.path_from_root
-
+          
+        // response model
         const response = {
           author: {
             name: author.name,
@@ -157,9 +182,13 @@ self.getProducts = function(req, res) {
           },
             item: item,
             categories: selectedCategory,
-            } 
+          }
+
         return res.json(response)
-        }).catch(function(err){
+        
+        // gotta catch 'em all
+        
+      }).catch(function(err){
           console.log(err)
         })
       }).catch(function(err) {

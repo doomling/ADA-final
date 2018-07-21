@@ -3,41 +3,42 @@ import '../general.css';
 import './single-product.css'
 
 class View extends Component {
- constructor(props) {
-   super(props)
- }
-
   render() {
-    console.log(this.props.item)
     return (
       <div className="single-product-container">
         <div className="col1">
           <img src={this.props.item.picture}/>
           <div>
-            <h1> Descripción del producto </h1>
+            <h2> Descripción del producto </h2>
             <span className="description">
               {this.props.item.description}
             </span>
           </div>
         </div>
         <div className="col2">
-          <div>{this.props.item.condition}</div>
-          <div>{this.props.item.sold_quantity} vendidos</div>
-          <div>{this.props.item.title}</div>
+          <span className="status">{this.props.item.condition} - </span>
+          <span className="status">{this.props.item.sold_quantity} vendidos</span>
+          <h1>{this.props.item.title}</h1>
           <div>
-            <span>
-              {this.props.item.price.amount}
+            <span className="single-product-price">
+              ${this.props.item.price.amount}
             </span>
-            <span>
+            {(this.props.item.price.decimals == 0) && 
+            <sup className="single-product-decimals">
+                00
+            </sup>}
+            {(this.props.item.price.decimals != 0) &&
+            <sup className="single-product-decimals">
               {this.props.item.price.decimals}
-            </span>
+            </sup>}
+            <div className="button"> 
+              Comprar
+            </div>
           </div>
-          
         </div>
       </div>
     );
   }
-
 }
 
 export default View;

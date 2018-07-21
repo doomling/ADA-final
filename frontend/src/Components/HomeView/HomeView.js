@@ -3,9 +3,6 @@ import '../general.css';
 import Navbar from '../Navbar/Navbar'
 
 class Home extends Component {
- constructor(props) {
-   super(props)
- }
 
   render() {
     return (
@@ -14,7 +11,6 @@ class Home extends Component {
         </section>
     );
   }
-
 }
 
 export default Home;

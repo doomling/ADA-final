@@ -1,8 +1,17 @@
 .breadcrum {
-    padding: 10px 0;
+    padding: 5px 0;
     display: flex;
-    background-color: #8CC4D8;
     color: #175676;
-    width: 100vw;
-    margin-bottom: 20px;
+    width: 70%;
+    margin: 15px auto;
+    box-sizing: border-box; 
+}
+
+.breadcrum-caret {
+    font-size: 10px;
+    padding: 5px;
+}
+
+.breadcrum-caret:first-child {
+    display: none;
 }

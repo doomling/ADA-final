@@ -14,22 +14,16 @@ class SingleProductView extends Component {
  }
 
  async componentDidMount() {
-    console.log(this.props.location)
-    console.log(this.props.match.params.id)
     const id = this.props.match.params.id
     const getSearch = await fetch('http://localhost:3001/api/items/'+ id)
     const getSearchJson = await getSearch.json()
-    console.log(getSearchJson)
+    
     this.setState({
       data: getSearchJson,
     })
   }
 
-  /*{this.props.shipping &&
-                <span><img src="./images/ic_shipping.png"/></span>}
-*/
   render() {
-    console.log(this.state.search)
     return (
         <section className="home">
         <Navbar/>
@@ -40,7 +34,6 @@ class SingleProductView extends Component {
         </section>
     );
   }
-
 }
 
 export default SingleProductView;

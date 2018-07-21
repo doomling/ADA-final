@@ -8,18 +8,18 @@ import ItemView from './Components/SingleProductView/SingleProductView'
 
 class App extends Component {
 
-render() {
-  return (
-  <Router>
-    <div>
-      <Route exact path="/" component={HomeView} />
-      <Route exact path="/items/" component={SearchView} />
-      <Route path="/items/:id" component={ItemView} />
-    </div>
-  </Router>
-  );
-}
-
+  render() {
+    return (
+    <Router>
+      <div>
+        <Route exact path="/" component={HomeView} />
+        <Route exact path="/items/" component={SearchView} />
+        <Route path="/items/:id" component={ItemView} />
+      </div>
+    </Router>
+    );
+  }
 }
 
 export default App;
+
