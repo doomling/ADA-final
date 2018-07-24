@@ -54,7 +54,7 @@ handleKeyPress(event) {
 }
 
  render() {
-   const url = "/items?search=" + this.state.finalValue
+   const url = "/items?search=" + this.state.textValue
     return (
       <nav>
         {this.state.isRedirecting && <Redirect to={url} />}
