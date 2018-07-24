@@ -7,11 +7,12 @@
     box-sizing: border-box; 
 }
 
-.breadcrum-caret {
-    font-size: 10px;
+.breadcrum span::after {
     padding: 5px;
+    content: ">";
 }
 
-.breadcrum-caret:first-child {
-    display: none;
+.breadcrum span:last-child::after {
+    content: '';
 }
+

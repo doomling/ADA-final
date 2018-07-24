@@ -5,16 +5,15 @@ class Breadcrum extends Component {
 
 render() {
     return (
-    <div className='breadcrum'>
-        {this.props.value.map((value, i) => {
-            return (
-                <div key={i}>
-                    <span>{value.name}</span>
-                    <span className="breadcrum-caret"> > </span>
-                </div>
+        <div className='breadcrum'>
+            {this.props.value.map((value, i) => {
+                return (
+                    <span key={i}>
+                        {value.name}
+                    </span>
+                )}
             )}
-        )}
-    </div>
+        </div>
     )}
 }
 

@@ -9,3 +9,21 @@ html, body {
     width: 100vw;
     padding: 0;
 }
+
+.empty-content {
+    width: 70%;
+    padding:15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    margin: auto;
+}
+
+.empty-content div{
+    width: 50%;
+    text-align: center;
+    font-size: 36px;
+    color: #555555;
+    font-weight: bold;
+}

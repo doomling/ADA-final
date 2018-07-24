@@ -23,15 +23,15 @@ class Navbar extends Component {
 
 componentDidUpdate() {
   if (this.state.isRedirecting) {
-        this.setState ({
-          isRedirecting: false,
-        })
-    }
+    this.setState ({
+      isRedirecting: false,
+    })
+  }
 }
 
 // saving the final value to use as query
 
-handleClick = () => {
+handleClick() {
   if (this.state.textValue != '') {
     this.setState({
       isRedirecting: true,
@@ -42,7 +42,7 @@ handleClick = () => {
 
 // same as handle click but for pressing enter
 
-handleKeyPress = (event) => {
+handleKeyPress(event) {
   if(event.key == 'Enter'){
     if(this.state.textValue != '') {
       this.setState({
@@ -57,16 +57,14 @@ handleKeyPress = (event) => {
    const url = "/items?search=" + this.state.finalValue
     return (
       <nav>
-        {this.state.isRedirecting &&
-          <Redirect to={url} />
-          }
+        {this.state.isRedirecting && <Redirect to={url} />}
           <div className="inner-content">
           <Link to="/">
             <img className="logo" src="/images/doomling.png" />
           </Link>
           <div className="search-container">
-              <input type="text" value={this.state.textValue} onKeyPress={this.handleKeyPress} onChange={this.handleChange.bind(this)} onSubmit={this.resetField}/>
-              <div className="button" onSubmit={this.resetField} onClick={this.handleClick}>
+              <input type="text" value={this.state.textValue} onKeyPress={this.handleKeyPress.bind(this)} onChange={this.handleChange.bind(this)} onSubmit={this.resetField}/>
+              <div className="button" onSubmit={this.resetField} onClick={this.handleClick.bind(this)}>
                   <Link to={url}><img src="/images/ic_Search.png"/></Link>
               </div>
           </div>

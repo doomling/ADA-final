@@ -28,9 +28,9 @@ class SingleProductView extends Component {
         <section className="home">
         <Navbar/>
         {this.state.data &&
-        <Breadcrum value={this.state.data.categories}/>}
+          <Breadcrum value={this.state.data.categories}/>}
         {this.state.data &&
-        <SingleProduct item={this.state.data.item}/>}
+          <SingleProduct item={this.state.data.item}/>}
         </section>
     );
   }

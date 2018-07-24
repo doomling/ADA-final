@@ -21,6 +21,11 @@ class View extends Component {
           <h1>{this.props.item.title}</h1>
           <div>
             <span className="single-product-price">
+              {(this.props.item.price.currency == 'ARS') &&
+                <span> 
+                  $ 
+                </span>
+              }
               ${this.props.item.price.amount}
             </span>
             {(this.props.item.price.decimals == 0) && 

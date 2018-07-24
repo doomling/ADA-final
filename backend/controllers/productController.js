@@ -1,7 +1,5 @@
 let self = {}
-var restler = require('restler');
 const externalApi = require('../services/productService')
-
 
 // author, required harcoded data
 
@@ -10,9 +8,7 @@ const author = {
   lastname: 'Rey',
 }
 
-
-
-getCategory = function(data) {
+getCategory = (data) => {
   let selectedCategory = [] 
 
   let categories = {
@@ -50,48 +46,49 @@ getCategory = function(data) {
   }
 }
 
-getAmount = function(price) {
-  price = price.toString()
-  if (price.indexOf('.') > -1) {
-   return amount = parseInt(price.slice(0, price.indexOf('.')))
-  } else {
-    return amount = parseInt(price)
+getPriceDetails = (amount) => {
+  console.log('juani')
+  amount = amount.toString()
+  let priceDetails = {
+    price: '',
+    decimals: '',
   }
-}
-
-getDecimals = function(price) {
-price = price.toString()
- if (price.indexOf('.') > -1) {
-   decimals = price.slice(price.indexOf('.')+ 1)
-   // If decimals are just one number, adding an aditional 0
-   if (decimals.length < 2) {
-     decimals = decimals + '0'
-   } 
-   // parsing to int because API expects a number, not a string.
-   // This is the only reason I'll be handling double zeroes in the FE.
-  return parseInt(decimals)
- } else {
-   return decimals = 0
- }
+  console.log(amount)
+    if (amount.indexOf('.') == -1 ) {
+      priceDetails.price = parseInt(amount)
+      priceDetails.decimals = 0
+      return priceDetails
+    } else {
+      priceDetails.price = parseInt(amount.slice(0, amount.indexOf('.')))
+      priceDetails.decimals = parseInt(amount.slice(amount.indexOf('.')+ 1))
+      if (priceDetails.decimals.length < 2) {
+        priceDetails.decimals = priceDetails.decimals + '0'
+        priceDetails.decimals = parseInt(priceDetails.decimals)
+      }
+      console.log(priceDetails)
+      return priceDetails
+    }
 }
 
 // get items per page
 
-getItemsPerPage = function(data) {
+getItemsPerPage = (data) => {
   let items = []
 
   for(var i = 0; i < data.results.length; i++) {
 
-    const amount = getAmount(data.results[i].price)
-    const decimals = getDecimals(data.results[i].price)
+    //const amount = getAmount(data.results[i].price)
+    //const decimals = getDecimals(data.results[i].price)
+    const price = getPriceDetails(data.results[i].price)
+    console.log(price)
 
     items[i] = {
       id: data.results[i].id,
       title: data.results[i].title,
       price: {
         currency: data.results[i].currency_id,
-        amount: amount,
-        decimals: decimals,
+        amount: price.price,
+        decimals: price.decimals,
       },
       picture: data.results[i].thumbnail,
       location: data.results[i].address.state_name,
@@ -104,9 +101,9 @@ getItemsPerPage = function(data) {
 
 // finally getting the products with all required fields.
 
-self.getProducts = function(req, res) {
+self.getProducts = (req, res) => {
     let search = req.query.q
-      externalApi.getProductData(search).then(function(data) {
+      externalApi.getProductData(search).then((data) => {
         let selectedCategory = []
         selectedCategory = getCategory(data)
 
@@ -123,30 +120,25 @@ self.getProducts = function(req, res) {
         return res.json(response)
 
       }).catch(function(err) {
-        res.json({cause: 'failed to fetch', status: '500'}, 500)
+        return res.sendStatus(500);
       })
   }
 
   // getting products by id
   // it's currently way slower than what I'd like - TODO: Make it better somehow
 
-  self.getProductById = function(req, res) {
+  self.getProductById = (req, res) => {
     
-    let id = req.params.id
+    const id = req.params.id
     let description = ''
-    let amount = ''
-    let decimals = ''
     selectedCategory = []
 
-      externalApi.getProductById(id).then(function(data) {
+      externalApi.getProductById(id).then((data) => {
       
       // saving amount and decimals for later
-      
-      amount = getAmount(data.price)
-      decimals = getDecimals(data.price)
+      const price = getPriceDetails(data.price)
 
-
-        externalApi.getProductDescription(id).then(function(dataDescription) {
+        externalApi.getProductDescription(id).then((dataDescription) => {
     
           if (dataDescription.plain_text != "") {
             description = dataDescription.plain_text
@@ -159,19 +151,19 @@ self.getProducts = function(req, res) {
             title: data.title,
             price: {       
               currency: data.price.currency,       
-              amount: amount,       
-              decimals: decimals,   
+              amount: price.price,
+              decimals: price.decimals,   
             },     
               picture: data.pictures[0].url,     
               condition: data.condition,     
               free_shipping: data.free_shipping,     
               sold_quantity: data.sold_quantity,     
               description: description,   
-              }
+          }
         
         // another API call to get the product category
 
-        externalApi.getProductCategories(data.category_id).then(function(dataCategories) {
+        externalApi.getProductCategories(data.category_id).then((dataCategories) => {
           selectedCategory = dataCategories.path_from_root
           
         // response model
@@ -184,19 +176,19 @@ self.getProducts = function(req, res) {
             categories: selectedCategory,
           }
 
-        return res.json(response)
+          return res.json(response)
         
         // gotta catch 'em all
         
-      }).catch(function(err){
-          console.log(err)
+        }).catch(function(err){
+          return res.sendStatus(500);
         })
       }).catch(function(err) {
-          console.log(err)
+        return res.sendStatus(500);
       })
     }).catch(function(err) {
-        console.log(err)
-    })
-  }
+      return res.sendStatus(500);
+  })
+}
   
 module.exports = self
